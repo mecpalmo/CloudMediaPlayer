@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pl-PL">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cloud Media Player</title>
+    <link rel="stylesheet" type="text/css" href="../common/common.css"/>
+	<link rel="stylesheet" type="text/css" href="css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="css/browser.css"/>
+	<link rel="stylesheet" type="text/css" href="css/sidebar.css"/>
+    <link rel="stylesheet" type="text/css" href="../common/loader/loader.css"/>
+	<link rel="stylesheet" type="text/css" href="../common/messages/messages.css"/>
+	<script type="text/javascript" src="../common/common.js"></script>
+   	<script type="text/javascript" src="./js/main.js"></script>
+	<script type="text/javascript" src="./js/connection_handler.js"></script>
+	<script type="text/javascript" src="./js/navigation_handler.js"></script>
+	<script type="text/javascript" src="./js/grid_handler.js"></script>
+	<script type="text/javascript" src="./js/sidebar_handler.js"></script>
+	<script type="text/javascript" src="../common/loader/loader.js"></script>
+	<script type="text/javascript" src="../common/messages/messages.js"></script>
+</head>
+<body>
+
+	<div id="loader" class="loader"></div>
+
+	<div id="sidebar">
+		<div class="siderow" id="home" tabindex="-1">
+			<div class="sideIconWrapper">
+				<img class="sideIcon" src="../../icons/home.png"></img>
+			</div>
+			<div class="sideText hidden">home</div>
+		</div>
+		<div class="siderow" id="refresh" tabindex="-1">
+			<div class="sideIconWrapper">
+				<img class="sideIcon" src="../../icons/refresh.png"></img>
+			</div>
+			<div class="sideText hidden">refresh</div>
+		</div>
+		<div class="siderow" id="gridSize" tabindex="-1">
+			<div class="sideIconWrapper">
+				<img class="sideIcon" src="../../icons/grid.png"></img>
+			</div>
+			<div class="sideText hidden">grid size</div>
+		</div>
+		<div class="siderow" id="sort" tabindex="-1">
+			<div class="sideIconWrapper">
+				<img class="sideIcon" src="../../icons/sort.png"></img>
+			</div>
+			<div id="sideText_sort" class="sideText hidden">by name</div>
+		</div>
+		<div class="siderow" id="photos" tabindex="-1">
+			<div class="sideIconWrapper">
+				<img class="sideIcon" src="../../icons/image.png"></img>
+			</div>
+			<div class="sideText hidden">photos</div>
+		</div>
+	</div>
+
+	<div id="main-wrapper">
+		<div id="path">/</div>
+	    <div id="grid-container">
+		    <div class="tile" tabindex="-1">
+		      <img class="thumbnail" src="../../icons/back.png"/>
+		      <div class="title">Back</div>
+		    </div>
+	    </div>
+	</div>
+
+</body>
+</html>

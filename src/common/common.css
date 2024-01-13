@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap');
+
+* {
+	transition: 0.5s;
+}
+
+body {
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    font-family: 'Rubik', sans-serif;
+    margin: 0;
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+}
+
+:root {
+    --primary-color: #2f3238;
+    --secondary-color: #293d6a;
+    --focus-color: #424b5f;
+    --button-color: #2e3f60;
+    --text-color: white;
+}

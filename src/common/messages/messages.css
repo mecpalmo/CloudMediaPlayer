@@ -1,0 +1,34 @@
+.info{
+    top: 15%;
+    left: 50%;
+    padding: 20px;
+    position: fixed;
+    z-index: 999;
+    background-color: #505050b0;
+    border-radius: 30px;
+    color: white;
+    font-family: 'Rubik', sans-serif;
+    font-size: 32px;
+    font-weight: 500;
+    word-wrap: break-word;
+    transform: translate(-50%, 0);
+    max-width: 80%;
+}
+
+.error{
+    top: 15%;
+    left: 50%;
+    padding: 20px;
+    position: fixed;
+    z-index: 999;
+    background-color: #a00000b0;
+    border-radius: 30px;
+    color: white;
+    font-family: 'Rubik', sans-serif;
+    font-size: 32px;
+    font-weight: 500;
+    word-wrap: break-word;
+    transform: translate(-50%, 0);
+    max-width: 80%;
+}
+

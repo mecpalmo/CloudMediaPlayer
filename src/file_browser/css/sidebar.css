@@ -1,0 +1,49 @@
+#sidebar {
+  width: 8%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5%;
+}
+  
+#sidebar.extended {
+  width: 20%;
+}
+
+.siderow {
+  display: flex;
+  border-radius: 0 25px 25px 0;
+  padding: 30px;
+  padding-left: 50px;
+  align-items: center;
+}
+
+.siderow:focus {
+  background-color: var(--focus-color);
+  border-right: 1px solid #b9b9b9;
+  border-top: 1px solid #b9b9b9;
+  border-bottom: 1px solid #b9b9b9;
+}
+
+.sideIconWrapper {
+  flex-basis: 0;
+  flex-grow: 1;
+}
+
+.sideIcon {
+  max-width: 100%;
+}
+
+.sideText {
+  text-align: center;
+  font-weight: 600;
+  font-size: 36px;
+  width: 80%;
+  opacity: 1;
+}
+
+.sideText.hidden {
+  width: 0%;
+  opacity: 0;
+}

@@ -1,0 +1,11 @@
+body{
+	display: flex;
+}
+
+#path {
+	background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+	width: 100%;
+	padding: 30px;
+	font-size: 28px;
+	font-weight: 500;
+}
