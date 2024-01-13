@@ -33,3 +33,7 @@ Build the app using Tizen SDK and deploy it to your TV using following sources:
 * https://developer.samsung.com/smarttv/develop/getting-started/creating-tv-applications/importing-tv-applications.html
 
 * https://docs.tizen.org/application/tizen-studio/common-tools/device-manager/
+
+<br></br>
+
+## Checkout the Icons used from Pixel Perfect! <br></br> https://www.flaticon.com/authors/pixel-perfect
