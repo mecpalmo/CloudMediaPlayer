@@ -15,7 +15,6 @@ function reloadFileArray(path) {
 			if(SORT_BY_DATE){
 				data.sort((a, b) => a.date - b.date);
 			}
-			console.log(data);
 			currentFileArray = data;
 			updatePathDescription();
             updateGridContainer();
@@ -42,7 +41,7 @@ function setSessionStorage(path, filePath){
 function updatePathDescription(){
 	const visiblePath = getCurrentPath().replace(CLOUD_PATH, "");
 	const folders = visiblePath.split('/');
-	const path = "/ " + folders.join(" > ");
+	const path = folders.join(" / ");
 	const pathDescription = document.getElementById("path");
 	pathDescription.innerHTML = path;
 }

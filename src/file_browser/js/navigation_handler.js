@@ -107,8 +107,5 @@ function enterSiderow(siderow){
 			switchSorting();
 			resolvePath(getCurrentPath());
 			break;
-		case "photos":
-			window.location.href = "../photo_browser/browser.html";
-			break;
 	}
 }
