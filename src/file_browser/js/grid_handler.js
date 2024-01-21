@@ -38,7 +38,11 @@ function addFoldersToGrid(){
 
 function addFilesToGrid(){
 	const gridContainer = document.getElementById(gridContainerId);
-	getCurrentFileArray().forEach(function (file) {
+	var array = getCurrentFileArray();
+	if(SORT_BY_DATE){
+		array.sort((a, b) => a.date - b.date);
+	}
+	array.forEach(function (file) {
 		if (file.type != 'directory') {
 			const tile = generateTile(file.mediaType, file.name);
 			gridContainer.appendChild(tile);

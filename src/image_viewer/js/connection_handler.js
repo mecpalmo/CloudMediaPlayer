@@ -7,6 +7,9 @@ function loadRelativeImageFromArray(path, relativeIndex){
 	.then(function(data) {
 		hideLoading();
 		const fileTree = data.filter(obj => obj.mediaType === "image");
+		if(SORT_BY_DATE){
+			fileTree.sort((a, b) => a.date - b.date);
+		}
 		const currentIndex = fileTree.findIndex(obj => obj.path === currentImagePath);
 		if(currentIndex != -1){
 			const newIndex = currentIndex + relativeIndex;

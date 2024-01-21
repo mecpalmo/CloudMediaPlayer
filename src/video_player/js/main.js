@@ -1,9 +1,12 @@
 var currentVideoPath;
+var SORT_BY_DATE = false;
 
 window.onload = function () {
 	currentVideoPath = "";
 	const urlParams = new URLSearchParams(window.location.search);
 	currentVideoPath = urlParams.get(pathParameter);
+	const sort = urlParams.get(sortParameter);
+	SORT_BY_DATE = sort === 'true';
 	addKeyHandler();
 	setVideoSource(currentVideoPath);
 }

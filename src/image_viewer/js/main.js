@@ -1,4 +1,5 @@
 var currentImagePath;
+var SORT_BY_DATE = false;
 
 var fillMode = false;
 
@@ -6,6 +7,8 @@ window.onload = function () {
 	currentImagePath = "";
 	const urlParams = new URLSearchParams(window.location.search);
 	currentImagePath = urlParams.get(pathParameter);
+	const sort = urlParams.get(sortParameter);
+	SORT_BY_DATE = sort === 'true';
 	addKeyHandler();
 	hideTitle();
 	loadImageByPath(currentImagePath);

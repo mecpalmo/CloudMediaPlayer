@@ -12,9 +12,6 @@ function reloadFileArray(path) {
 		})
 		.then(function(data) {
 			setCurrentPath(path);
-			if(SORT_BY_DATE){
-				data.sort((a, b) => a.date - b.date);
-			}
 			currentFileArray = data;
 			updatePathDescription();
             updateGridContainer();

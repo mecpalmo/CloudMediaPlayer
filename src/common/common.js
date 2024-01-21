@@ -7,4 +7,5 @@ const sessionPath = "sessionpath";
 const sessionFileFocus = "lastfilefocused";
 const sessionScrollPosition = "scrollPosition";
 
-const pathParameter = "param";
+const pathParameter = "path";
+const sortParameter = "sort";

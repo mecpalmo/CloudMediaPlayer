@@ -20,13 +20,13 @@ function resolvePath(path){
 
 function launchVideoPlayer(file){
 	setSessionStorage(currentPath, file.path);
-	const nextPageUrl = '../video_player/player.html?'+pathParameter+'=' + encodeURIComponent(file.path);
+	const nextPageUrl = `../video_player/player.html?${pathParameter}=${encodeURIComponent(file.path)}&${sortParameter}=${SORT_BY_DATE}`;
 	window.location.href = nextPageUrl;
 }
 
 function launchImageViewer(file){
 	setSessionStorage(currentPath, file.path);
-	var nextPageUrl = '../image_viewer/viewer.html?'+pathParameter+'=' + encodeURIComponent(file.path);
+	const nextPageUrl = `../image_viewer/viewer.html?${pathParameter}=${encodeURIComponent(file.path)}&${sortParameter}=${SORT_BY_DATE}`;
 	window.location.href = nextPageUrl;
 }
 
