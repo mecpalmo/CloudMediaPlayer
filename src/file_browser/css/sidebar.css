@@ -17,6 +17,9 @@
   padding: 30px;
   padding-left: 50px;
   align-items: center;
+  border-right: 1px solid #b9b9b900;
+  border-top: 1px solid #b9b9b900;
+  border-bottom: 1px solid #b9b9b900;
 }
 
 .siderow:focus {

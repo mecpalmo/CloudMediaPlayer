@@ -6,6 +6,7 @@ const PHOTO_CLOUD_PATH = "/externalDrive/Cloud/Zdjęcia";
 const sessionPath = "sessionpath";
 const sessionFileFocus = "lastfilefocused";
 const sessionScrollPosition = "scrollPosition";
+const sessionSort = "sessionsort";
 
 const pathParameter = "path";
 const sortParameter = "sort";

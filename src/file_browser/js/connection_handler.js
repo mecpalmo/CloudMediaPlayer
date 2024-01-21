@@ -28,11 +28,11 @@ function reloadFileArray(path) {
 function setSessionStorage(path, filePath){
 	sessionStorage.setItem(sessionPath, path);
 	sessionStorage.setItem(sessionFileFocus, filePath);
+	sessionStorage.setItem(sessionSort, SORT_BY_DATE);
 	const gridContainer = document.getElementById(gridContainerId);
 	if(gridContainer){
 		sessionStorage.setItem(sessionScrollPosition, gridContainer.scrollY);
 	}
-	
 }
 
 function updatePathDescription(){

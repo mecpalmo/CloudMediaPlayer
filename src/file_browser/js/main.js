@@ -6,6 +6,16 @@ window.onload = function () {
 	if(path !== null){
 		currentPath = path;
 	}
+	const sort = sessionStorage.getItem(sessionSort);
+	if(sort !== null){
+		SORT_BY_DATE = sort === 'true';
+		if(SORT_BY_DATE){
+			const sortText = document.getElementById("sideText_sort");
+			if(sortText !== null){
+				sortText.textContent = "by date";
+			}
+		}
+	}
 	addKeyHandler();
 	resolvePath(currentPath);
 }
