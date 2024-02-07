@@ -27,7 +27,7 @@ echo json_encode($response);
 
 function getMediaType($fileName) {
   $video_extensions = array("mp4", "avi", "3gp", "asf", "ogv", "mkv", "wmv");
-  $image_extensions = array("jpg", "png");
+  $image_extensions = array("jpg", "png", "jpeg");
   $extension = strtolower(substr($fileName, strrpos($fileName, '.') + 1));
   if (in_array($extension, $video_extensions, false)) {
     return "video";

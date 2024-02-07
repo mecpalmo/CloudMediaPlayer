@@ -70,7 +70,7 @@ def generate_thumbnails(source_folder, thumbnail_folder):
     for root, dirs, files in os.walk(source_folder):
         for file in files:
             # Check if the file is an image
-            if file.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp')):
+            if file.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp', '.jpeg')):
                 source_path = os.path.join(root, file)
                 
                 # Calculate the relative path to maintain folder structure
