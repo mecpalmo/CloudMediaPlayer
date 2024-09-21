@@ -36,4 +36,4 @@ Build the app using Tizen SDK and deploy it to your TV using following sources:
 
 <br></br>
 
-## Check out the Icons used from Pixel Perfect! <br></br> https://www.flaticon.com/authors/pixel-perfect
+### Check out the Icons used from Pixel Perfect! <br></br> https://www.flaticon.com/authors/pixel-perfect

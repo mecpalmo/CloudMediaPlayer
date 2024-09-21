@@ -37,9 +37,22 @@
 }
 
 .thumbnail {
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+}
+
+.thumbnail-container {
   max-width: 100%;
   height: auto;
-  border-radius: 20px;
+  position: relative;
+}
+
+.thumbnail-tag {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0.4;
 }
 
 .title {

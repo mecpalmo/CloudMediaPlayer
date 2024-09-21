@@ -104,13 +104,16 @@ function generateTile(type, name){
 	const tile = document.createElement('div');
 	tile.classList.add('tile');
 	tile.setAttribute('tabindex', '-1');
+	const thumbnailContainer = document.createElement('div');
+	thumbnailContainer.classList.add('thumbnail-container');
 	const thumbnail = document.createElement('img');
 	thumbnail.classList.add('thumbnail');
 	thumbnail.src = getFileIconPath(type);
+	thumbnailContainer.appendChild(thumbnail);
 	const title = document.createElement('div');
 	title.classList.add('title');
 	title.textContent = getFormattedTitle(name);
-	tile.appendChild(thumbnail);
+	tile.appendChild(thumbnailContainer);
 	tile.appendChild(title);
 	return tile;
 }
@@ -144,17 +147,41 @@ function updateThumbnails(){
 	const tiles = Array.from(document.getElementsByClassName("tile"));
 	tiles.forEach( function (tile){
 		const file = getFileByTile(tile);
-		if (file && (file.mediaType === 'video' || file.mediaType === 'image')) {
-			const thumbnail = tile.querySelector('.thumbnail');
-			setImageSourceIfValid(thumbnail, URL + getThumbnailPath(file.path));
+		if (file && (file.mediaType === 'image')) {
+			tryToUpdateImageThumbnail(tile, URL + getThumbnailPath(file.path));
 		}
+		if (file && (file.mediaType === 'video')) {
+			tryToUpdateVideoThumbnail(tile, URL + getThumbnailPath(file.path));
+		} 
 	});
 }
 
-function setImageSourceIfValid(imgElement, imageUrl) {
+function tryToUpdateImageThumbnail(tile, imageUrl) {
 	const tempImage = new Image();
 	tempImage.onload = function() {
-		imgElement.src = imageUrl;
+		const thumbnail = tile.querySelector('.thumbnail');
+		if(thumbnail){
+			thumbnail.src = imageUrl;
+		}
+	};
+	tempImage.src = imageUrl;
+}
+
+function tryToUpdateVideoThumbnail(tile, imageUrl){
+	const tempImage = new Image();
+	tempImage.onload = function() {
+		const thumbnail = tile.querySelector('.thumbnail');
+		if(!thumbnail){
+			return;
+		}
+		thumbnail.src = imageUrl;
+		const container = tile.querySelector('.thumbnail-container');
+		if(container){
+			const tag = document.createElement('img');
+			tag.classList.add('thumbnail-tag');
+			tag.src = '../../icons/video_tag.png';
+			container.insertBefore(tag, container.firstChild);
+		}
 	};
 	tempImage.src = imageUrl;
 }
