@@ -5,7 +5,9 @@ body{
 #path {
 	background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
 	width: 100%;
-	padding: 30px;
-	font-size: 28px;
+	align-items: center;
+	font-size: 32px;
 	font-weight: 500;
+	height: 35px;
+	padding: 20px;
 }

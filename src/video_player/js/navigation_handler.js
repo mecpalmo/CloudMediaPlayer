@@ -2,37 +2,49 @@ function addKeyHandler() {
 	document.addEventListener('keydown', function (event) {
 		const videoWrapper = document.getElementById('video_wrapper');
 		const videoPlayer = videoWrapper.firstChild;
-		showTitle();
 		showControls();
 		switch (event.keyCode) {
 			case 10009: //key RETURN
-				exitPlayer();
+				if(rewinding){
+					hideControls();
+				}else{
+					exitPlayer();
+				}
 				break;
-			case 10252:
-			case 13: //key ENTER
+			case 10252: //key Play/Pause
 				if(videoPlayer.paused){
 					videoPlayer.play();
-				    setPlayButton(false);
+					removePauseButton();
 					break;
 				}
 				videoPlayer.pause();
-				setPlayButton(true);
+				setPauseButton();
+				break;
+			case 13: //key ENTER
+				if(rewinding){
+					rewind();
+					break;
+				}
+				if(videoPlayer.paused){
+					videoPlayer.play();
+				    removePauseButton();
+					break;
+				}
+				videoPlayer.pause();
+				setPauseButton();
 				break;
 			case 39: // RIGHT 
 				if (!videoPlayer.seeking){
-					fastForward();
-					//videoPlayer.currentTime = Math.min(videoPlayer.currentTime + rewindSeconds, videoPlayer.seekable.end(0));
+					moveRight();
 				}
 				break;
 			case 37: // LEFT
 				if (!videoPlayer.seeking){
-					rewind();
-					//videoPlayer.currentTime = Math.max(videoPlayer.currentTime - rewindSeconds, videoPlayer.seekable.start(0));
+					moveLeft();
 				}
 				break;
 			case 40: //key DOWN
 				hideControls();
-				hideTitle();
 				break;
 		}
 	});

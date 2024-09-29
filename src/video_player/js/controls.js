@@ -1,12 +1,10 @@
 const rewindSeconds = 10;
 const controlsDurationMillis = 3000;
-const rewindComboDelayMillis = 2000;
-var controlsTimer;
-const rewindJumpTable = [30, 300];
-var rewindJumpIndex = 0;
-var rewindTimer;
-var ffJumpIndex = 0;
-var ffTimer;
+
+var previewTime = 0; //time of the preview frame when rewinding
+var controlsTimer; //timer for auto fading out controls
+
+var rewinding = false;
 
 function initProgressVisuals(videoPlayer){
 	videoPlayer.addEventListener("timeupdate", function () {
@@ -35,12 +33,24 @@ function getTimeFormatted(time){
 	}
 }
 
-function setPlayButton(isPlay){
-	const playButton = document.getElementById('play');
-	playButton.innerHTML = (isPlay ? '<img src="../../icons/play.png"></img>' : '<img src="../../icons/pause.png"></img>');
+function removePauseButton(){
+	const icons = document.getElementById('icons');
+	icons
+	while (icons.children.length > 0) {
+		icons.removeChild(icons.lastElementChild);
+	}
+}
+
+function setPauseButton(){
+	var pause = document.createElement('img');
+	pause.src = "../../icons/pause.png";
+	pause.classList.add('pause');
+	const icons = document.getElementById('icons');
+	icons.appendChild(pause);
 }
 
 function showControls() {
+	showTitle();
 	const controls = document.getElementById("controls");
 	controls.style.opacity = 1;
 	clearTimeout(controlsTimer);
@@ -48,46 +58,110 @@ function showControls() {
 }
 
 function hideControls() {
+	hideTitle();
+	showRewinding(false);
 	const controls = document.getElementById("controls");
 	controls.style.opacity = 0;
 }
 
-function fastForward(){
-	clearTimeout(ffTimer);
-	resetRewindJump();
-	const videoWrapper = document.getElementById('video_wrapper');
-	const videoPlayer = videoWrapper.firstChild;
-	if (videoPlayer && !videoPlayer.seeking){
-		videoPlayer.currentTime = Math.min(videoPlayer.currentTime + rewindJumpTable[ffJumpIndex], videoPlayer.seekable.end(0));
+function showRewinding(isVisible){
+	const rewindingMarker = document.getElementById('rewind_marker');
+	if(isVisible){
+		rewindingMarker.style.display = "block";
+		rewinding = true;
+	}else{
+		rewindingMarker.style.display = "none";
+		rewinding = false;
 	}
-	ffJumpIndex = ffJumpIndex + 1;
-	if(ffJumpIndex >= rewindJumpTable.length){
-		ffJumpIndex = rewindJumpTable.length - 1;
+}
+
+function moveRight(){
+	if(rewinding){
+		moveTheMarkerWithSeconds(rewindSeconds);
+	}else{
+		resetMarkerPosition();
+		showRewinding(true);
 	}
-	ffTimer = setTimeout(resetFastForwardingJump, rewindComboDelayMillis);
+}
+
+function moveLeft(){
+	if(rewinding){
+		moveTheMarkerWithSeconds(-rewindSeconds);
+	}else{
+		resetMarkerPosition();
+		showRewinding(true);
+	}
 }
 
 function rewind(){
-	clearTimeout(rewindTimer);
-	resetFastForwardingJump();
 	const videoWrapper = document.getElementById('video_wrapper');
 	const videoPlayer = videoWrapper.firstChild
 	if (videoPlayer && !videoPlayer.seeking){	
-		videoPlayer.currentTime = Math.max(videoPlayer.currentTime - rewindJumpTable[rewindJumpIndex], videoPlayer.seekable.start(0));
+		videoPlayer.currentTime = previewTime;
 	}
-	rewindJumpIndex = rewindJumpIndex + 1;
-	if(rewindJumpIndex >= rewindJumpTable.length){
-		rewindJumpIndex = rewindJumpTable.length - 1;
-	}
-	rewindTimer = setTimeout(resetRewindJump, rewindComboDelayMillis);
 }
 
-function resetFastForwardingJump(){
-	clearTimeout(ffTimer);
- 	ffJumpIndex = 0;
+function resetMarkerPosition(){
+	const marker = document.getElementById('rewind_marker');
+	const currentTime = getVideoCurrentTime();
+	const duration = getVideoDuration();
+	previewTime = currentTime;
+	var position = (previewTime / duration) * 100; //in %
+	marker.style.left = position + '%';
+	updatePreviewTimer();
 }
 
-function resetRewindJump(){
-	clearTimeout(rewindTimer);
-	rewindJumpIndex = 0;
+function moveTheMarkerWithSeconds(seconds) {
+	const marker = document.getElementById('rewind_marker');
+	const duration = getVideoDuration();
+	previewTime += seconds;
+	if(previewTime > duration){
+		previewTime = duration;
+	}else if(previewTime < 0){
+		previewTime = 0;
+	}
+	var position = (previewTime / duration) * 100; //in %
+	marker.style.left = position + '%';
+	updatePreviewTimer();
+	updatePreviewFrame();
+}
+
+function updatePreviewFrame(){
+	
+}
+
+function getVideoDuration(){
+	const videoWrapper = document.getElementById('video_wrapper');
+	const videoPlayer = videoWrapper.firstChild;
+	if(!videoPlayer){
+		return 1;
+	}
+	return videoPlayer.duration;
+}
+
+function getVideoCurrentTime(){
+	const videoWrapper = document.getElementById('video_wrapper');
+	const videoPlayer = videoWrapper.firstChild;
+	if(!videoPlayer){
+		return 1;
+	}
+	return videoPlayer.currentTime;
+}
+
+function updatePreviewTimer(){
+	const previewTimer = document.getElementById('preview_time');
+	previewTimer.innerHTML = getTimeFormatted(previewTime);
+}
+
+function getVideoFrameAsImage(video, timestamp, callback) {
+	const canvas = document.createElement('canvas');
+	canvas.width = video.videoWidth;
+	canvas.height = video.videoHeight;
+	const context = canvas.getContext('2d');
+	video.currentTime = timestamp;
+	video.addEventListener('seeked', () => {
+	  context.drawImage(video, 0, 0, canvas.width, canvas.height);
+	  const imageDataUrl = canvas.toDataURL('image/png');
+	  callback(imageDataUrl);
+	});
 }
