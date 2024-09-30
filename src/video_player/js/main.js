@@ -7,6 +7,21 @@ window.onload = function () {
 	currentVideoPath = urlParams.get(pathParameter);
 	const sort = urlParams.get(sortParameter);
 	SORT_BY_DATE = sort === 'true';
+
+	const previewVideo = document.getElementById('preview_video');
+	previewVideo.addEventListener("seeked", function() {
+		rewindSeeking = false;
+		if(rewinding){
+			showRewinding(true);
+			showControls();
+		}
+		const current = previewVideo.currentTime;
+		if(Math.abs(current - previewTime) > (rewindSeconds / 2)){
+			console.log("correction needed");
+			updatePreviewFrame();
+		}
+	});
+
 	addKeyHandler();
 	setVideoSource(currentVideoPath);
 }
@@ -29,8 +44,10 @@ function setVideoSource(path){
 	setCurrentPath(path);
 	const videoPlayer = document.createElement("video");
 	videoPlayer.src = URL + path;
+	setPreviewVideoSource(URL + path);
 	setTitle(path);
 	videoPlayer.setAttribute("autoplay", "");
+	videoPlayer.play();
 	const videoWrapper = document.getElementById('video_wrapper');
 	while (videoWrapper.firstChild) {
 		videoWrapper.removeChild(videoWrapper.firstChild);

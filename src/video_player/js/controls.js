@@ -5,19 +5,28 @@ var previewTime = 0; //time of the preview frame when rewinding
 var controlsTimer; //timer for auto fading out controls
 
 var rewinding = false;
+var rewindSeeking = false;
 
 function initProgressVisuals(videoPlayer){
 	videoPlayer.addEventListener("timeupdate", function () {
-	      const currentTime = videoPlayer.currentTime;
-	      const duration = videoPlayer.duration;
-	      const progressPercentage = (currentTime / duration) * 100;
-	      const bar = document.getElementById('bar');
-	      const currentTimer = document.getElementById("current_time");
-	      const remainingTimer = document.getElementById("remaining_time");
-	      currentTimer.innerHTML = getTimeFormatted(currentTime);
-	      remainingTimer.innerHTML = getTimeFormatted(duration - currentTime);
-	      bar.style.width = progressPercentage + "%";
+		const currentTime = videoPlayer.currentTime;
+		const duration = videoPlayer.duration;
+		const progressPercentage = (currentTime / duration) * 100;
+		const bar = document.getElementById('bar');
+		const currentTimer = document.getElementById("current_time");
+		const remainingTimer = document.getElementById("remaining_time");
+		currentTimer.innerHTML = getTimeFormatted(currentTime);
+		remainingTimer.innerHTML = getTimeFormatted(duration - currentTime);
+		bar.style.width = progressPercentage + "%";
 	});
+
+	videoPlayer.addEventListener("seeking", function () {
+		showLoading();
+	});
+
+	videoPlayer.addEventListener("seeked", function() {
+		hideLoading();
+	})
 }
 
 function getTimeFormatted(time){
@@ -35,7 +44,6 @@ function getTimeFormatted(time){
 
 function removePauseButton(){
 	const icons = document.getElementById('icons');
-	icons
 	while (icons.children.length > 0) {
 		icons.removeChild(icons.lastElementChild);
 	}
@@ -70,8 +78,13 @@ function showRewinding(isVisible){
 		rewindingMarker.style.display = "block";
 		rewinding = true;
 	}else{
-		rewindingMarker.style.display = "none";
-		rewinding = false;
+		if(rewindSeeking){
+			showControls();
+			showRewinding(true);
+		}else{
+			rewindingMarker.style.display = "none";
+			rewinding = false;
+		}
 	}
 }
 
@@ -109,6 +122,7 @@ function resetMarkerPosition(){
 	var position = (previewTime / duration) * 100; //in %
 	marker.style.left = position + '%';
 	updatePreviewTimer();
+	updatePreviewFrame();
 }
 
 function moveTheMarkerWithSeconds(seconds) {
@@ -126,8 +140,19 @@ function moveTheMarkerWithSeconds(seconds) {
 	updatePreviewFrame();
 }
 
+function setPreviewVideoSource(source){
+	const previewVideo = document.getElementById('preview_video');
+	previewVideo.src = source;
+	previewVideo.pause();
+}
+
 function updatePreviewFrame(){
-	
+	if(rewindSeeking){
+		return;
+	}
+	const previewVideo = document.getElementById('preview_video');
+	previewVideo.currentTime = previewTime;
+	rewindSeeking = true;
 }
 
 function getVideoDuration(){
