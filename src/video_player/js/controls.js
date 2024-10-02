@@ -141,7 +141,7 @@ function rewindVideo(){
 		return;
 	}
 	rewindSeeking = true;
-	const video = document.getElementById('mainVideo');
+	const video = document.getElementById('main_video');
 	video.currentTime = previewTime;
 }
 
