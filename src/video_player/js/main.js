@@ -8,21 +8,8 @@ window.onload = function () {
 	const sort = urlParams.get(sortParameter);
 	SORT_BY_DATE = sort === 'true';
 
-	const previewVideo = document.getElementById('preview_video');
-	previewVideo.addEventListener("seeked", function() {
-		rewindSeeking = false;
-		if(rewinding){
-			showRewinding(true);
-			showControls();
-		}
-		const current = previewVideo.currentTime;
-		if(Math.abs(current - previewTime) > (rewindSeconds / 2)){
-			console.log("correction needed");
-			updatePreviewFrame();
-		}
-	});
-
 	addKeyHandler();
+	setupVideoPlayer();
 	setVideoSource(currentVideoPath);
 }
 
@@ -40,19 +27,9 @@ function launchNextVideo(){
 	loadNextVideoFromCurrentFolder(path);
 }
 
-function setVideoSource(path){
-	setCurrentPath(path);
-	const videoPlayer = document.createElement("video");
-	videoPlayer.src = URL + path;
-	setPreviewVideoSource(URL + path);
-	setTitle(path);
+function setupVideoPlayer(){
+	const videoPlayer = document.getElementById('main_video');
 	videoPlayer.setAttribute("autoplay", "");
-	videoPlayer.play();
-	const videoWrapper = document.getElementById('video_wrapper');
-	while (videoWrapper.firstChild) {
-		videoWrapper.removeChild(videoWrapper.firstChild);
-	}
-	videoWrapper.appendChild(videoPlayer);
 	initProgressVisuals(videoPlayer);
 	videoPlayer.addEventListener('play', () => {
 		showTitle();
@@ -62,6 +39,13 @@ function setVideoSource(path){
 	videoPlayer.addEventListener('ended', () => {
 		launchNextVideo();
 	});
+}
+
+function setVideoSource(path){
+	setCurrentPath(path);
+	const videoPlayer = document.getElementById('main_video');
+	videoPlayer.src = URL + path;
+	setTitle(path);
 }
 
 function setCurrentPath(path){

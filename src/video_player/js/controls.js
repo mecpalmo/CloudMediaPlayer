@@ -19,13 +19,16 @@ function initProgressVisuals(videoPlayer){
 		remainingTimer.innerHTML = getTimeFormatted(duration - currentTime);
 		bar.style.width = progressPercentage + "%";
 	});
-
 	videoPlayer.addEventListener("seeking", function () {
 		showLoading();
 	});
 
 	videoPlayer.addEventListener("seeked", function() {
 		hideLoading();
+		rewindSeeking = false;
+		if(Math.abs(videoPlayer.currentTime - previewTime) > (rewindSeconds / 2)){
+			rewindVideo();
+		}
 	})
 }
 
@@ -106,28 +109,21 @@ function moveLeft(){
 	}
 }
 
-function rewind(){
-	const videoWrapper = document.getElementById('video_wrapper');
-	const videoPlayer = videoWrapper.firstChild
-	if (videoPlayer && !videoPlayer.seeking){	
-		videoPlayer.currentTime = previewTime;
-	}
-}
-
 function resetMarkerPosition(){
 	const marker = document.getElementById('rewind_marker');
-	const currentTime = getVideoCurrentTime();
-	const duration = getVideoDuration();
+	const video = document.getElementById('main_video');
+	const currentTime = video.currentTime;
+	const duration = video.duration;
 	previewTime = currentTime;
 	var position = (previewTime / duration) * 100; //in %
 	marker.style.left = position + '%';
 	updatePreviewTimer();
-	updatePreviewFrame();
 }
 
 function moveTheMarkerWithSeconds(seconds) {
 	const marker = document.getElementById('rewind_marker');
-	const duration = getVideoDuration();
+	const video = document.getElementById('main_video');
+	const duration = video.duration;
 	previewTime += seconds;
 	if(previewTime > duration){
 		previewTime = duration;
@@ -137,56 +133,19 @@ function moveTheMarkerWithSeconds(seconds) {
 	var position = (previewTime / duration) * 100; //in %
 	marker.style.left = position + '%';
 	updatePreviewTimer();
-	updatePreviewFrame();
+	rewindVideo();
 }
 
-function setPreviewVideoSource(source){
-	const previewVideo = document.getElementById('preview_video');
-	previewVideo.src = source;
-	previewVideo.pause();
-}
-
-function updatePreviewFrame(){
-	if(rewindSeeking){
+function rewindVideo(){
+	if(rewindSeeking || !rewinding){
 		return;
 	}
-	const previewVideo = document.getElementById('preview_video');
-	previewVideo.currentTime = previewTime;
 	rewindSeeking = true;
-}
-
-function getVideoDuration(){
-	const videoWrapper = document.getElementById('video_wrapper');
-	const videoPlayer = videoWrapper.firstChild;
-	if(!videoPlayer){
-		return 1;
-	}
-	return videoPlayer.duration;
-}
-
-function getVideoCurrentTime(){
-	const videoWrapper = document.getElementById('video_wrapper');
-	const videoPlayer = videoWrapper.firstChild;
-	if(!videoPlayer){
-		return 1;
-	}
-	return videoPlayer.currentTime;
+	const video = document.getElementById('mainVideo');
+	video.currentTime = previewTime;
 }
 
 function updatePreviewTimer(){
 	const previewTimer = document.getElementById('preview_time');
 	previewTimer.innerHTML = getTimeFormatted(previewTime);
-}
-
-function getVideoFrameAsImage(video, timestamp, callback) {
-	const canvas = document.createElement('canvas');
-	canvas.width = video.videoWidth;
-	canvas.height = video.videoHeight;
-	const context = canvas.getContext('2d');
-	video.currentTime = timestamp;
-	video.addEventListener('seeked', () => {
-	  context.drawImage(video, 0, 0, canvas.width, canvas.height);
-	  const imageDataUrl = canvas.toDataURL('image/png');
-	  callback(imageDataUrl);
-	});
 }
