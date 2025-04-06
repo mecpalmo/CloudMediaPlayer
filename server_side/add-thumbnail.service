@@ -1,0 +1,13 @@
+[Unit]
+Description=Custom Script Service
+StartLimitIntervalSec=0
+
+[Service]
+ExecStart=/home/admin/tizen-tv-app-server/auto-thumbnail-scripts/notify_file_created.sh
+User=admin
+Restart=always
+RestartSec=60s
+WorkingDirectory=/home/admin/tizen-tv-app-server/auto-thumbnail-scripts
+
+[Install]
+WantedBy=multi-user.target

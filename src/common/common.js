@@ -1,7 +1,9 @@
 const URL = "http://192.168.0.50";
 const SCRIPT = "/filetree.php?path=";
-const CLOUD_PATH = "/externalDrive/Cloud";
-const PHOTO_CLOUD_PATH = "/externalDrive/Cloud/Zdjęcia";
+const CLOUD_PATH = "/files";
+const THUMBNAILS_PATH = "/thumbnails";
+
+const PHOTO_CLOUD_PATH = "undefined";
 
 const sessionPath = "sessionpath";
 const sessionFileFocus = "lastfilefocused";

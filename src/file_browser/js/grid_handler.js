@@ -187,7 +187,7 @@ function tryToUpdateVideoThumbnail(tile, imageUrl){
 }
 
 function getThumbnailPath(filePath) {
-	filePath = filePath.replace('Cloud', 'Thumbnails');
+	filePath = filePath.replace(CLOUD_PATH, THUMBNAILS_PATH);
 	var indexOfDot = filePath.lastIndexOf('.');
 	if (indexOfDot !== -1) {
 		return filePath.substring(0, indexOfDot) + '.jpg';
